@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n/I18nProvider.jsx';
 import { SECTION_IDS } from '../data/site.js';
 import Reveal from './Reveal.jsx';
+import SectionLabel from './SectionLabel.jsx';
 import { AlertIcon } from './Icons.jsx';
 
 const PIN_LEGEND = [
@@ -9,19 +10,26 @@ const PIN_LEGEND = [
   { kind: 'idle', className: 'legend-idle' },
 ];
 
+const POWER_ROWS = [
+  { pin: 'VCC', role: 'VCC' },
+  { pin: 'GND', role: 'GND' },
+];
+
 export default function Hardware() {
   const { t } = useI18n();
   const components = t('hardware.components');
   const pins = t('hardware.pinMap');
-  const lcdPins = pins.filter((pin) => pin.kind === 'i2c');
+  const lcdPins = [...pins.filter((pin) => pin.kind === 'i2c'), ...POWER_ROWS];
   const buttonPins = pins.filter((pin) => pin.kind === 'button');
 
   return (
-    <section className="section section--tint" id={SECTION_IDS.hardware}>
+    <section className="section" id={SECTION_IDS.hardware}>
       <div className="shell">
         <Reveal className="section-head">
-          <p className="eyebrow">{t('hardware.eyebrow')}</p>
-          <h2 className="section-title gradient-text">{t('hardware.title')}</h2>
+          <SectionLabel>{t('hardware.eyebrow')}</SectionLabel>
+          <h2 className="section-title">
+            {t('hardware.title')} <span className="serif-accent">{t('hardware.accent')}</span>
+          </h2>
           <p className="section-lead">{t('hardware.lead')}</p>
         </Reveal>
 
@@ -43,8 +51,8 @@ export default function Hardware() {
           </Reveal>
 
           <Reveal className="hardware__side" delay={120}>
-            <div className="wiring">
-              <p className="wiring__title">{t('hardware.lcdTitle')}</p>
+            <div className="panel">
+              <p className="panel__title">{t('hardware.lcdTitle')}</p>
               <table className="wiring__table">
                 <thead>
                   <tr>
@@ -59,18 +67,10 @@ export default function Hardware() {
                       <td>{pin.role}</td>
                     </tr>
                   ))}
-                  <tr>
-                    <td>VCC</td>
-                    <td>VCC</td>
-                  </tr>
-                  <tr>
-                    <td>GND</td>
-                    <td>GND</td>
-                  </tr>
                 </tbody>
               </table>
 
-              <p className="wiring__title">{t('hardware.buttonsTitle')}</p>
+              <p className="panel__title">{t('hardware.buttonsTitle')}</p>
               <table className="wiring__table">
                 <thead>
                   <tr>
@@ -89,25 +89,23 @@ export default function Hardware() {
               </table>
             </div>
 
-            <div className="wiring">
-              <p className="wiring__title">{t('hardware.pinMapLabel')}</p>
-              <div className="pinmap">
-                <div className="pinmap__grid">
-                  {pins.map((pin) => (
-                    <span className="pin" data-kind={pin.kind} key={pin.pin}>
-                      <span className="pin__id">{pin.pin}</span>
-                      <span className="pin__role">{pin.role}</span>
-                    </span>
-                  ))}
-                </div>
-                <div className="pinmap__legend">
-                  {PIN_LEGEND.map((legend) => (
-                    <span className={legend.className} key={legend.kind}>
-                      <i aria-hidden="true" />
-                      {t(`hardware.pinLegend.${legend.kind}`)}
-                    </span>
-                  ))}
-                </div>
+            <div className="panel">
+              <p className="panel__title">{t('hardware.pinMapLabel')}</p>
+              <div className="pinmap__grid">
+                {pins.map((pin) => (
+                  <span className="pin" data-kind={pin.kind} key={pin.pin}>
+                    <span className="pin__id">{pin.pin}</span>
+                    <span className="pin__role">{pin.role}</span>
+                  </span>
+                ))}
+              </div>
+              <div className="pinmap__legend">
+                {PIN_LEGEND.map((legend) => (
+                  <span className={legend.className} key={legend.kind}>
+                    <i aria-hidden="true" />
+                    {t(`hardware.pinLegend.${legend.kind}`)}
+                  </span>
+                ))}
               </div>
             </div>
 

@@ -48,7 +48,8 @@ const en = {
 
   about: {
     eyebrow: 'The project',
-    title: 'What is TinyPocket?',
+    title: 'What is',
+    accent: 'TinyPocket?',
     lead: 'An electronics and embedded programming project where interacting with the device needs nothing more than three push buttons and a 16×2 display.',
     facts: [
       { label: 'Microcontroller', value: 'ATtiny85' },
@@ -67,7 +68,8 @@ const en = {
 
   features: {
     eyebrow: 'What it solves',
-    title: 'Main features',
+    title: 'The features',
+    accent: 'that matter',
     lead: 'Simple parts on the outside, engineering decisions on the inside. This is what makes TinyPocket work.',
     items: [
       {
@@ -116,6 +118,7 @@ const en = {
   games: {
     eyebrow: 'Game modes',
     title: 'The four modes',
+    accent: 'on an 8-bit chip',
     lead: 'Same microcontroller, same 16-character display and three buttons. Four different ways to use them.',
     controlsLabel: 'Controls',
     controls: { left: 'LEFT', right: 'RIGHT', ok: 'OK' },
@@ -169,7 +172,8 @@ const en = {
 
   hardware: {
     eyebrow: 'Components',
-    title: 'Hardware and wiring',
+    title: 'Hardware',
+    accent: 'and wiring',
     lead: 'A deliberately short parts list, and an equally simple wiring scheme.',
     componentsLabel: 'Components',
     quantityLabel: 'Quantity',
@@ -182,6 +186,7 @@ const en = {
       { name: 'Wires', qty: 'As needed', note: 'To connect the microcontroller, the display and the buttons.' },
     ],
     pinMapLabel: 'ATtiny85 pins in use',
+    pinLegend: { i2c: 'I²C', button: 'Button', idle: 'Unused' },
     pinMap: [
       { pin: 'PB0', role: 'SDA', kind: 'i2c' },
       { pin: 'PB1', role: 'OK', kind: 'button' },
@@ -202,7 +207,8 @@ const en = {
 
   technologies: {
     eyebrow: 'Knowledge',
-    title: 'Technologies and concepts',
+    title: 'Technologies',
+    accent: 'and concepts',
     lead: 'What you need to know to understand, maintain and extend the project.',
     items: [
       { term: 'C/C++', text: 'The firmware is written in C/C++ for Arduino with no abstraction layers: every line ends up talking to the hardware.' },
@@ -220,7 +226,8 @@ const en = {
 
   links: {
     eyebrow: 'Where to find it',
-    title: 'Code and simulation',
+    title: 'Code',
+    accent: 'and simulation',
     lead: 'The project is open: you can read it, run it and modify it.',
     externalNotice: 'Both links open in a new tab, on sites external to this page.',
     github: {

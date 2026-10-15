@@ -48,7 +48,8 @@ const es = {
 
   about: {
     eyebrow: 'El proyecto',
-    title: '¿Qué es TinyPocket?',
+    title: '¿Qué es',
+    accent: 'TinyPocket?',
     lead: 'Un proyecto de electrónica y programación embebida en el que la interacción con el usuario no necesita nada más que tres pulsadores y una pantalla de 16×2.',
     facts: [
       { label: 'Microcontrolador', value: 'ATtiny85' },
@@ -67,7 +68,8 @@ const es = {
 
   features: {
     eyebrow: 'Qué resuelve',
-    title: 'Características principales',
+    title: 'Características',
+    accent: 'que importan',
     lead: 'Piezas sencillas por fuera, decisiones de ingeniería por dentro. Esto es lo que hace que TinyPocket funcione.',
     items: [
       {
@@ -116,6 +118,7 @@ const es = {
   games: {
     eyebrow: 'Modos de juego',
     title: 'Los cuatro modos',
+    accent: 'en un chip de 8 bits',
     lead: 'Mismo microcontrolador, misma pantalla de 16 caracteres y tres botones. Cuatro formas distintas de usarlos.',
     controlsLabel: 'Controles',
     controls: { left: 'LEFT', right: 'RIGHT', ok: 'OK' },
@@ -169,7 +172,8 @@ const es = {
 
   hardware: {
     eyebrow: 'Componentes',
-    title: 'Hardware y conexiones',
+    title: 'Hardware',
+    accent: 'y conexiones',
     lead: 'Una lista de piezas corta a propósito, y un esquema de conexiones igual de sencillo.',
     componentsLabel: 'Componentes',
     quantityLabel: 'Cantidad',
@@ -182,6 +186,7 @@ const es = {
       { name: 'Cables', qty: 'Según necesidad', note: 'Para unir microcontrolador, pantalla y pulsadores.' },
     ],
     pinMapLabel: 'Pines utilizados del ATtiny85',
+    pinLegend: { i2c: 'I²C', button: 'Botón', idle: 'Sin uso' },
     pinMap: [
       { pin: 'PB0', role: 'SDA', kind: 'i2c' },
       { pin: 'PB1', role: 'OK', kind: 'button' },
@@ -202,7 +207,8 @@ const es = {
 
   technologies: {
     eyebrow: 'Conocimientos',
-    title: 'Tecnologías y conceptos',
+    title: 'Tecnologías',
+    accent: 'y conceptos',
     lead: 'Lo que hay que saber para entender, mantener y ampliar el proyecto.',
     items: [
       { term: 'C/C++', text: 'El firmware está escrito en C/C++ para Arduino, sin capas de abstracción: cada línea termina hablando con el hardware.' },
@@ -220,7 +226,8 @@ const es = {
 
   links: {
     eyebrow: 'Dónde encontrarlo',
-    title: 'Código y simulación',
+    title: 'Código',
+    accent: 'y simulación',
     lead: 'El proyecto es abierto: se puede leer, ejecutar y modificar.',
     externalNotice: 'Los dos enlaces se abren en una pestaña nueva, en sitios externos a esta página.',
     github: {
