@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider.jsx';
 import { SECTION_IDS } from '../data/site.js';
 import Reveal from './Reveal.jsx';
 import SectionLabel from './SectionLabel.jsx';
-import { BlackjackVisual, PetVisual, PingPongVisual, SnakeVisual } from './visuals/ModeVisuals.jsx';
+import VersionTabs from './VersionTabs.jsx';
+import {
+  BlackjackVisual,
+  BreakoutVisual,
+  PetVisual,
+  PingPongVisual,
+  SnakeVisual,
+} from './visuals/ModeVisuals.jsx';
 import { TargetIcon } from './Icons.jsx';
 
 const MODE_VISUALS = {
@@ -10,11 +18,18 @@ const MODE_VISUALS = {
   mascota: PetVisual,
   blackjack: BlackjackVisual,
   snake: SnakeVisual,
+  breakout: BreakoutVisual,
 };
+
+const VERSIONS = [
+  { id: 'attiny85', label: 'ATtiny85 · LCD 16×2' },
+  { id: 'mega2560', label: 'Mega 2560 · OLED 128×64' },
+];
 
 export default function GameModes() {
   const { t } = useI18n();
-  const items = t('games.items');
+  const [version, setVersion] = useState('attiny85');
+  const items = t(`games.${version}`);
   const visualLabels = t('games.visual');
   const controlKeys = ['left', 'right', 'ok'];
 
@@ -29,14 +44,24 @@ export default function GameModes() {
           <p className="section-lead">{t('games.lead')}</p>
         </Reveal>
 
+        <Reveal delay={80} className="section-tabs">
+          <VersionTabs
+            label={t('games.versionLabel')}
+            options={VERSIONS}
+            value={version}
+            onChange={setVersion}
+          />
+          <p className="section-tabs__note">{t('games.note')}</p>
+        </Reveal>
+
         <div className="modes">
           {items.map((mode, index) => {
             const Visual = MODE_VISUALS[mode.id];
 
             return (
-              <Reveal className="mode" key={mode.id} data-mode={mode.id}>
+              <Reveal className="mode" key={`${version}-${mode.id}`} data-mode={mode.id}>
                 <div className="mode__visual" aria-hidden="true">
-                  <Visual labels={visualLabels} />
+                  <Visual labels={visualLabels} version={version} />
                 </div>
 
                 <div className="mode__body">

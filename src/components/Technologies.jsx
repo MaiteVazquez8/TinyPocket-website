@@ -22,12 +22,13 @@ export default function Technologies() {
           {items.map((item, index) => (
             <Reveal as="li" className="tech__item" delay={(index % 3) * 70} key={item.term}>
               <div className="tech__head">
-                <span className="tech__badge" aria-hidden="true">
+                <span className={`tech__badge scope--${item.scope}`} aria-hidden="true">
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <h3 className="tech__term">{item.term}</h3>
               </div>
               <p className="tech__text">{item.text}</p>
+              <span className={`scope scope--${item.scope}`}>{t(`scope.${item.scope}`)}</span>
             </Reveal>
           ))}
         </ul>

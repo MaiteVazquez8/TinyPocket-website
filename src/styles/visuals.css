@@ -348,6 +348,31 @@
   animation-delay: -1.1s;
 }
 
+/* Mega 2560: una sola paleta y un contador de puntos, sin rival */
+.pp--solo .pp__ball,
+.pp--solo .pp__trail {
+  left: 12%;
+}
+
+.pp__paddle--solo {
+  left: 50%;
+  bottom: 12%;
+  top: auto;
+  width: 4.5rem;
+  height: 0.35rem;
+  transform: translateX(-50%);
+  animation: pp-paddle-solo 3.8s var(--ease-soft) infinite alternate;
+}
+
+@keyframes pp-paddle-solo {
+  from {
+    transform: translateX(-50%) translateX(-2.2rem);
+  }
+  to {
+    transform: translateX(-50%) translateX(2.2rem);
+  }
+}
+
 @keyframes pp-paddle {
   from {
     transform: translateY(-165%);
@@ -691,8 +716,13 @@
   box-shadow: 0 0 8px -1px color-mix(in srgb, var(--mode-b) 85%, transparent);
 }
 
+.sn__cell--block {
+  background: color-mix(in srgb, var(--mode-a) 55%, transparent);
+  border-radius: 1px;
+}
+
 .sn__cell--head {
-  border-radius: 3px;
+  border-radius: 999px;
   background: var(--mode-grad);
   box-shadow: 0 0 12px 0 color-mix(in srgb, var(--mode-a) 95%, transparent);
   animation: sn-head 3.6s steps(3, end) infinite;

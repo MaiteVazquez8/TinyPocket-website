@@ -7,7 +7,7 @@ import { ArrowDownIcon, GitHubIcon } from './Icons.jsx';
 
 export default function Hero() {
   const { t, dict } = useI18n();
-  const menuItems = dict.games.items.map((item) => item.name);
+  const menuItems = dict.games.attiny85.map((item) => item.name);
 
   return (
     <section className="hero" id="top">

@@ -31,7 +31,10 @@ export default function Features() {
               <div className="feature__body">
                 <h3 className="feature__title">{item.title}</h3>
                 <p className="feature__text">{item.text}</p>
-                <span className="tag">{item.tag}</span>
+                <span className="feature__meta">
+                  <span className={`scope scope--${item.scope}`}>{t(`scope.${item.scope}`)}</span>
+                  <span className="tag">{item.tag}</span>
+                </span>
               </div>
             </Reveal>
           ))}

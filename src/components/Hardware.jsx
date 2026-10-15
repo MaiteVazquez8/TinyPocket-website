@@ -1,26 +1,52 @@
+import { useState } from 'react';
 import { useI18n } from '../i18n/I18nProvider.jsx';
 import { SECTION_IDS } from '../data/site.js';
 import Reveal from './Reveal.jsx';
 import SectionLabel from './SectionLabel.jsx';
-import { AlertIcon } from './Icons.jsx';
+import VersionTabs from './VersionTabs.jsx';
+import { AlertIcon, CircuitIcon } from './Icons.jsx';
 
 const PIN_LEGEND = [
   { kind: 'i2c', className: '' },
   { kind: 'button', className: 'legend-button' },
-  { kind: 'idle', className: 'legend-idle' },
 ];
 
-const POWER_ROWS = [
-  { pin: 'VCC', role: 'VCC' },
-  { pin: 'GND', role: 'GND' },
+const VERSIONS = [
+  { id: 'attiny85', label: 'ATtiny85 · LCD 16×2' },
+  { id: 'mega2560', label: 'Mega 2560 · OLED 128×64' },
 ];
+
+function WiringTable({ title, headers, rows }) {
+  return (
+    <>
+      <p className="panel__title">{title}</p>
+      <table className="wiring__table">
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th scope="col" key={header}>
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={`${row.pin}-${row.role}`}>
+              <td>{row.pin}</td>
+              <td>{row.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
 
 export default function Hardware() {
   const { t } = useI18n();
-  const components = t('hardware.components');
-  const pins = t('hardware.pinMap');
-  const lcdPins = [...pins.filter((pin) => pin.kind === 'i2c'), ...POWER_ROWS];
-  const buttonPins = pins.filter((pin) => pin.kind === 'button');
+  const [version, setVersion] = useState('attiny85');
+  const data = t(`hardware.${version}`);
 
   return (
     <section className="section" id={SECTION_IDS.hardware}>
@@ -33,13 +59,22 @@ export default function Hardware() {
           <p className="section-lead">{t('hardware.lead')}</p>
         </Reveal>
 
+        <Reveal delay={80} className="section-tabs">
+          <VersionTabs
+            label={t('hardware.versionLabel')}
+            options={VERSIONS}
+            value={version}
+            onChange={setVersion}
+          />
+        </Reveal>
+
         <div className="hardware__layout">
           <Reveal className="bom">
             <div className="bom__row bom__head">
               <strong>{t('hardware.componentsLabel')}</strong>
               <span className="bom__qty">{t('hardware.quantityLabel')}</span>
             </div>
-            {components.map((component) => (
+            {data.components.map((component) => (
               <div className="bom__row" key={component.name}>
                 <span className="bom__name">
                   {component.name}
@@ -52,47 +87,22 @@ export default function Hardware() {
 
           <Reveal className="hardware__side" delay={120}>
             <div className="panel">
-              <p className="panel__title">{t('hardware.lcdTitle')}</p>
-              <table className="wiring__table">
-                <thead>
-                  <tr>
-                    <th scope="col">{t('hardware.pinColumn')}</th>
-                    <th scope="col">{t('hardware.deviceColumn')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {lcdPins.map((pin) => (
-                    <tr key={pin.pin}>
-                      <td>{pin.pin}</td>
-                      <td>{pin.role}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <p className="panel__title">{t('hardware.buttonsTitle')}</p>
-              <table className="wiring__table">
-                <thead>
-                  <tr>
-                    <th scope="col">{t('hardware.pinColumn')}</th>
-                    <th scope="col">{t('hardware.functionColumn')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {buttonPins.map((pin) => (
-                    <tr key={pin.pin}>
-                      <td>{pin.pin}</td>
-                      <td>{pin.role}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <WiringTable
+                title={data.screenTitle}
+                headers={[t('hardware.pinColumn'), t('hardware.deviceColumn')]}
+                rows={data.screenRows}
+              />
+              <WiringTable
+                title={data.buttonsTitle}
+                headers={[t('hardware.pinColumn'), t('hardware.functionColumn')]}
+                rows={data.buttonRows}
+              />
             </div>
 
             <div className="panel">
-              <p className="panel__title">{t('hardware.pinMapLabel')}</p>
+              <p className="panel__title">{data.pinMapLabel}</p>
               <div className="pinmap__grid">
-                {pins.map((pin) => (
+                {data.pinMap.map((pin) => (
                   <span className="pin" data-kind={pin.kind} key={pin.pin}>
                     <span className="pin__id">{pin.pin}</span>
                     <span className="pin__role">{pin.role}</span>
@@ -112,10 +122,15 @@ export default function Hardware() {
             <div className="notice">
               <AlertIcon />
               <div>
-                <p className="notice__title">{t('hardware.noteTitle')}</p>
-                <p className="notice__text">{t('hardware.note')}</p>
+                <p className="notice__title">{data.noteTitle}</p>
+                <p className="notice__text">{data.note}</p>
               </div>
             </div>
+
+            <p className="notice notice--muted">
+              <CircuitIcon />
+              <span>{t('hardware.sharedNote')}</span>
+            </p>
           </Reveal>
         </div>
       </div>
