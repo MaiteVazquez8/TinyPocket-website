@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0718" />
+    <title>TinyPocket — Mini consola portátil con ATtiny85</title>
+    <meta
+      name="description"
+      content="TinyPocket es una mini consola portátil basada en un ATtiny85, una pantalla LCD 16×2 con comunicación I²C y tres botones, con cuatro modos de juego y una mascota virtual."
+    />
+    <script>
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('tp-theme');
+          var prefersLight =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches;
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : prefersLight
+                ? 'light'
+                : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+
+          var lang = window.localStorage.getItem('tp-lang');
+          if (lang === 'es' || lang === 'en' || lang === 'pt') {
+            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('data-lang', lang);
+          }
+        } catch (error) {
+          /* localStorage can be unavailable; defaults stay in place */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
