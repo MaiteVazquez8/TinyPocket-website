@@ -348,7 +348,7 @@
   animation-delay: -1.1s;
 }
 
-/* Mega 2560: una sola paleta y un contador de puntos, sin rival */
+/* Mega 2560 / Uno: una sola paleta y un contador de puntos, sin rival */
 .pp--solo .pp__ball,
 .pp--solo .pp__trail {
   left: 12%;
@@ -370,6 +370,37 @@
   }
   to {
     transform: translateX(-50%) translateX(2.2rem);
+  }
+}
+
+/* ATtiny85: la pelota cruza las dos filas del LCD, así que las paletas
+   son barras horizontales, una abajo (jugador) y otra arriba (máquina). */
+.pp--lcd .pp__paddle--player,
+.pp--lcd .pp__paddle--ai {
+  width: 2.4rem;
+  height: 0.3rem;
+  left: 45%;
+  transform: translateX(-50%);
+  animation: pp-paddle-lcd 2.8s var(--ease-soft) infinite alternate;
+}
+
+.pp--lcd .pp__paddle--player {
+  top: auto;
+  bottom: 14%;
+}
+
+.pp--lcd .pp__paddle--ai {
+  top: 14%;
+  right: auto;
+  animation-delay: -1.2s;
+}
+
+@keyframes pp-paddle-lcd {
+  from {
+    transform: translateX(-50%) translateX(-2.4rem);
+  }
+  to {
+    transform: translateX(-50%) translateX(2.4rem);
   }
 }
 

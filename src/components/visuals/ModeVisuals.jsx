@@ -1,38 +1,37 @@
-const MEGA = 'mega2560';
+const OLED_VERSIONS = ['mega2560', 'uno'];
+const isOled = (version) => OLED_VERSIONS.includes(version);
 
 export function PingPongVisual({ labels, version }) {
-  const isMega = version === MEGA;
+  const isCharLcd = !isOled(version);
 
   return (
     <div className="viz">
-      <div className={`pp${isMega ? ' pp--solo' : ''}`}>
-        {isMega ? (
+      <div className={`pp${isCharLcd ? ' pp--lcd' : ''}`}>
+        {isCharLcd ? (
+          <span className="pp__score">
+            <span>
+              {labels.you}
+              <b>3</b>
+            </span>
+            <span>
+              {labels.ai}
+              <b>2</b>
+            </span>
+          </span>
+        ) : (
           <span className="pp__score">
             <span>
               {labels.points}
               <b>7</b>
             </span>
           </span>
-        ) : (
-          <>
-            <span className="pp__score">
-              <span>
-                {labels.you}
-                <b>3</b>
-              </span>
-              <span>
-                {labels.ai}
-                <b>2</b>
-              </span>
-            </span>
-            <span className="pp__mid" />
-            <span className="pp__paddle pp__paddle--player" />
-            <span className="pp__paddle pp__paddle--ai" />
-          </>
         )}
+        {!isCharLcd && <span className="pp__mid" />}
+        {isCharLcd && <span className="pp__paddle pp__paddle--player" />}
+        {isCharLcd && <span className="pp__paddle pp__paddle--ai" />}
         <span className="pp__trail" />
         <span className="pp__ball" />
-        {isMega && <span className="pp__paddle pp__paddle--solo" />}
+        {!isCharLcd && <span className="pp__paddle pp__paddle--solo" />}
       </div>
     </div>
   );
@@ -41,6 +40,7 @@ export function PingPongVisual({ labels, version }) {
 const PET_BARS = {
   attiny85: ['9/9', '7/9'],
   mega2560: ['62', '80', '75', '80'],
+  uno: ['62', '80', '75', '80'],
 };
 
 export function PetVisual({ version }) {
@@ -113,30 +113,36 @@ export function BlackjackVisual({ labels }) {
   );
 }
 
-const BREAKOUT_ROWS = 4;
-const BREAKOUT_COLUMNS = 8;
-const BREAKOUT_BLOCKS = 24;
-const BREAKOUT_BALL = 25;
-const BREAKOUT_PADDLE = [27, 28, 29];
+export function BreakoutVisual({ labels, version }) {
+  const isCharLcd = !isOled(version);
+  const columns = isCharLcd ? 16 : 8;
+  const rows = isCharLcd ? 2 : 5;
+  const blocks = isCharLcd ? 16 : 32;
+  const paddle = isCharLcd ? [20, 21, 22] : [34, 35, 36];
+  const ball = isCharLcd ? 25 : 33;
 
-function breakoutCellState(index) {
-  if (index === BREAKOUT_BALL) return ' sn__cell--head';
-  if (BREAKOUT_PADDLE.includes(index)) return ' sn__cell--body';
-  if (index < BREAKOUT_BLOCKS) return ' sn__cell--block';
-  return '';
-}
+  const cellState = (index) => {
+    if (index === ball) return ' sn__cell--head';
+    if (paddle.includes(index)) return ' sn__cell--body';
+    if (index < blocks) return ' sn__cell--block';
+    return '';
+  };
 
-export function BreakoutVisual({ labels }) {
-  const cells = Array.from({ length: BREAKOUT_ROWS * BREAKOUT_COLUMNS }, (_, index) => (
-    <span className={`sn__cell${breakoutCellState(index)}`} key={index} />
+  const cells = Array.from({ length: columns * rows }, (_, index) => (
+    <span className={`sn__cell${cellState(index)}`} key={index} />
   ));
 
   return (
     <div className="viz viz--wide">
       <div className="sn">
-        <div className="sn__grid sn__grid--breakout">{cells}</div>
+        <div
+          className="sn__grid"
+          style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+        >
+          {cells}
+        </div>
         <div className="sn__meta">
-          <span>{`32 ${labels.blocks}`}</span>
+          <span>{`${blocks} ${labels.blocks}`}</span>
           <span>{`3 ${labels.lives}`}</span>
         </div>
       </div>
@@ -144,29 +150,31 @@ export function BreakoutVisual({ labels }) {
   );
 }
 
-const SNAKE_COLUMNS = 16;
-const SNAKE_ROWS = 2;
-const SNAKE_BODY = [2, 3, 4, 5];
-const SNAKE_HEAD = 6;
-const SNAKE_FOOD = 21;
-
 export function SnakeVisual({ labels, version }) {
-  const isMega = version === MEGA;
-  const cells = Array.from({ length: SNAKE_COLUMNS * SNAKE_ROWS }, (_, index) => {
+  const isCharLcd = !isOled(version);
+  const columns = isCharLcd ? 16 : 12;
+  const rows = isCharLcd ? 2 : 3;
+  const body = isCharLcd ? [2, 3, 4, 5] : [3, 9, 15, 21];
+  const head = isCharLcd ? 6 : 27;
+  const food = isCharLcd ? 21 : 32;
+
+  const cells = Array.from({ length: columns * rows }, (_, index) => {
     let modifier = '';
-    if (SNAKE_BODY.includes(index)) modifier = ' sn__cell--body';
-    if (index === SNAKE_HEAD) modifier = ' sn__cell--head';
-    if (index === SNAKE_FOOD) modifier = ' sn__cell--food';
+    if (body.includes(index)) modifier = ' sn__cell--body';
+    if (index === head) modifier = ' sn__cell--head';
+    if (index === food) modifier = ' sn__cell--food';
     return <span className={`sn__cell${modifier}`} key={index} />;
   });
 
   return (
     <div className="viz viz--wide">
       <div className="sn">
-        <div className="sn__grid">{cells}</div>
+        <div className="sn__grid" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+          {cells}
+        </div>
         <div className="sn__meta">
-          <span>{isMega ? '128 × 64' : '16 × 2'}</span>
-          <span>{isMega ? labels.segments : labels.cells}</span>
+          <span>{isCharLcd ? '16 × 2' : '128 × 64'}</span>
+          <span>{isCharLcd ? labels.cells : labels.segments}</span>
         </div>
       </div>
     </div>

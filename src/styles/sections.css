@@ -1031,6 +1031,10 @@
   background: var(--grad-cyan);
 }
 
+.ver-tabs__btn[data-version="uno"][aria-pressed="true"] {
+  background: linear-gradient(115deg, #2dd4bf, #0ea5e9);
+}
+
 [data-theme="light"] .ver-tabs__btn[aria-pressed="true"] {
   color: #fff;
 }
@@ -1073,6 +1077,10 @@
 
 .version-card[data-version="mega2560"] {
   --version-grad: linear-gradient(115deg, #38bdf8, #4f46e5);
+}
+
+.version-card[data-version="uno"] {
+  --version-grad: linear-gradient(115deg, #2dd4bf, #0ea5e9);
 }
 
 .version-card__board {
@@ -1199,9 +1207,19 @@
   --scope-ink: #e879f9;
 }
 
+.scope--unoMega {
+  --scope-grad: linear-gradient(115deg, #38bdf8, #4f46e5);
+  --scope-ink: #7dd3fc;
+}
+
 .scope--mega2560 {
   --scope-grad: linear-gradient(115deg, #38bdf8, #4f46e5);
   --scope-ink: #67e8f9;
+}
+
+.scope--uno {
+  --scope-grad: linear-gradient(115deg, #2dd4bf, #0ea5e9);
+  --scope-ink: #5eead4;
 }
 
 [data-theme="light"] .scope--shared {
@@ -1214,6 +1232,14 @@
 
 [data-theme="light"] .scope--mega2560 {
   --scope-ink: #0369a1;
+}
+
+[data-theme="light"] .scope--unoMega {
+  --scope-ink: #4338ca;
+}
+
+[data-theme="light"] .scope--uno {
+  --scope-ink: #0f766e;
 }
 
 .scope {
@@ -1249,7 +1275,9 @@
 
 .tech__badge.scope--shared,
 .tech__badge.scope--attiny85,
-.tech__badge.scope--mega2560 {
+.tech__badge.scope--mega2560,
+.tech__badge.scope--unoMega,
+.tech__badge.scope--uno {
   background: var(--scope-grad);
   color: #fff;
 }

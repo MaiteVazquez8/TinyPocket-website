@@ -12,8 +12,9 @@ const PIN_LEGEND = [
 ];
 
 const VERSIONS = [
-  { id: 'attiny85', label: 'ATtiny85 · LCD 16×2' },
-  { id: 'mega2560', label: 'Mega 2560 · OLED 128×64' },
+  { id: 'attiny85', label: 'ATtiny85' },
+  { id: 'mega2560', label: 'Mega 2560' },
+  { id: 'uno', label: 'Arduino Uno' },
 ];
 
 function WiringTable({ title, headers, rows }) {
